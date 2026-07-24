@@ -1,12 +1,15 @@
 package com.example.Eco_Backend.Entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
 import java.util.List;
 @Data
+@Builder
+
 @Entity
 @Table(name = "users")
 public class User {

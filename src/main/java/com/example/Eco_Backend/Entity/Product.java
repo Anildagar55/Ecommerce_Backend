@@ -26,7 +26,7 @@ public class Product {
     @Column(nullable = false)
     String description;
     @Column(nullable = false)
-    double baseprice;
+    double basePrice;
     @Column(nullable = false)
     String status="ACTIVE";
 

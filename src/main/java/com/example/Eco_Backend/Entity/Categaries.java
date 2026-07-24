@@ -2,13 +2,14 @@ package com.example.Eco_Backend.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "categories")
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
 public class Categaries {
     @Id
@@ -18,6 +19,6 @@ public class Categaries {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "parent_id")
+    @JoinColumn(name = "parent_id",nullable = false)
     private Categaries parent;
 }
