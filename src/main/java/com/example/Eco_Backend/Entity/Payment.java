@@ -4,13 +4,14 @@ import com.example.Eco_Backend.Enums.PaymentMethod;
 import com.example.Eco_Backend.Enums.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "payments")
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
 public class Payment {
          @Id
@@ -30,6 +31,6 @@ public class Payment {
          @Column(nullable = false)
        private   double amount;
          @Column(nullable = false)
-  private   String gateway_txn_id;
+  private   String gatewayTxnId;
 
 }

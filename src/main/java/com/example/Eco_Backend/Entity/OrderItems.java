@@ -1,11 +1,13 @@
 package com.example.Eco_Backend.Entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.security.core.parameters.P;
 
 @Data
 @Entity
+@Builder
 @Table(name = "order_items")
 public class OrderItems {
     @Id

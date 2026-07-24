@@ -1,11 +1,13 @@
 package com.example.Eco_Backend.Entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Data
 @Table(name = "shipments")
+@Builder
 public class Shipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

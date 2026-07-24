@@ -1,10 +1,11 @@
 package com.example.Eco_Backend.Entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
-
+@Builder
 @Data
 @Entity
 @Table(name = "product")
