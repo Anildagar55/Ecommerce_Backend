@@ -2,9 +2,8 @@ package com.example.Eco_Backend.Service;
 
 import com.example.Eco_Backend.DTO.CategoryRequest;
 import com.example.Eco_Backend.DTO.CategoryResponse;
-import com.example.Eco_Backend.Entity.Categaries;
+import com.example.Eco_Backend.Entity.Category;
 import com.example.Eco_Backend.Repository.CategoryRepository;
-import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,23 +13,23 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
 
     public CategoryResponse createCategory(CategoryRequest request){
-        Categaries parent=null;
+        Category parent=null;
         if (request.getParentId() != null) {
             parent = categoryRepository.findById(request.getParentId())
                     .orElseThrow(() -> new RuntimeException("Parent category not found: " + request.getParentId()));
         }
-    Categaries categaries=Categaries.builder()
+    Category category = Category.builder()
             .name(request.getName())
             .parent(parent)
             .build();
-        return mapToResponse(categoryRepository.save(categaries));
+        return mapToResponse(categoryRepository.save(category));
     }
-    public CategoryResponse mapToResponse(Categaries categaries){
+    public CategoryResponse mapToResponse(Category category){
         return CategoryResponse.builder()
-                .id(categaries.getId())
-                .name(categaries.getName())
-                .parentId(categaries.getParent() !=null ? categaries.getParent().getId() :null)
-                .parentName(categaries.getParent() != null ?categaries.getParent().getName():null)
+                .id(category.getId())
+                .name(category.getName())
+                .parentId(category.getParent() !=null ? category.getParent().getId() :null)
+                .parentName(category.getParent() != null ? category.getParent().getName():null)
                 .build();
     }
 }

@@ -40,7 +40,9 @@ public class ProductVariantService {
                 .build();
         inventoryRepository.save(inventory);
         return mapToResponse(saved,0);
-    }public List<ProductVariantResponse> getVariantsByProduct(Long productId) {
+    }
+
+    public List<ProductVariantResponse> getVariantsByProduct(Long productId) {
         return variantRepository.findByProductId(productId).stream()
                 .map(v -> {
                     int qty = inventoryRepository.findByVariantId(v.getId())

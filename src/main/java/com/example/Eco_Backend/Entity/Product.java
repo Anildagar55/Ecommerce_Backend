@@ -1,13 +1,17 @@
 package com.example.Eco_Backend.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 @Builder
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "product")
 public class Product {
     @Id
@@ -19,8 +23,8 @@ public class Product {
     Seller seller;
 
     @ManyToOne
-    @JoinColumn(name = "categaries_id",nullable = false)
-    Categaries categaries;
+    @JoinColumn(name = "category_id",nullable = false)
+    Category category;
 
     @Column(nullable = false)
     String title;

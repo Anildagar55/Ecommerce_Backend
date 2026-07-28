@@ -41,9 +41,9 @@ public class Order {
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<OrderItems>items;
 
-    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "order",cascade = CascadeType.ALL)
     private Payment payment;
-    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "order",cascade = CascadeType.ALL)
     private Shipment shipment;
 
 

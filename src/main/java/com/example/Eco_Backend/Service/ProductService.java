@@ -2,13 +2,14 @@ package com.example.Eco_Backend.Service;
 
 import com.example.Eco_Backend.DTO.ProductRequest;
 import com.example.Eco_Backend.DTO.ProductResponse;
-import com.example.Eco_Backend.Entity.Categaries;
+import com.example.Eco_Backend.Entity.Category;
 import com.example.Eco_Backend.Entity.Product;
 import com.example.Eco_Backend.Entity.Seller;
+import com.example.Eco_Backend.Repository.CategoryRepository;
 import com.example.Eco_Backend.Repository.ProductRepository;
 import com.example.Eco_Backend.Repository.SellerRepository;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -16,18 +17,25 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class ProductService {
-    private final ProductRepository productRepository;
-         private final SellerRepository sellerRepository;
+    @Autowired
+   ProductRepository productRepository;
+    @Autowired
+    SellerRepository sellerRepository;
+ @Autowired
+    CategoryRepository categoryRepository;
          @Transactional
     public ProductResponse createProduct(ProductRequest request){
              Seller seller=sellerRepository.findById(request.getSellerId())
                      .orElseThrow(()->new RuntimeException("Seller not found : "+request.getSellerId()));
+             Category category = categoryRepository.findById(request.getCategory_id())
+                     .orElseThrow(() ->
+                             new RuntimeException("Category not found: " + request.getCategory_id()));
              Product product=Product.builder()
                      .title(request.getTitle())
                      .description(request.getDescription())
                      .basePrice(request.getBasePrice())
+                     .category(category)
                      .seller(seller)
                      .status("ACTIVE")
                      .build();
@@ -41,7 +49,7 @@ public class ProductService {
              return mapToResponse(product);
          }
          public ProductResponse mapToResponse(Product product){
-             Categaries categaries=product.getCategaries();
+             Category category =product.getCategory();
              return ProductResponse.builder()
                      .id(product.getId())
                      .title(product.getTitle())
@@ -49,7 +57,7 @@ public class ProductService {
                      .basePrice(product.getBasePrice())
                      .status(product.getStatus())
                      .sellerName(product.getSeller() !=null ? product.getSeller().getBusiness_name():null)
-                     .categoryName(categaries !=null ? categaries.getName():null)
+                     .categoryName(category !=null ? category.getName():null)
                      .build();
 
          }

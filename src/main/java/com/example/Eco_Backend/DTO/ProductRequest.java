@@ -14,7 +14,7 @@ public class ProductRequest {
     @Positive(message = "Base price must be positive")
     private Double basePrice;
     @NotNull(message = "Category Id is required")
-    private Long categoryId;
+    private Long category_id;
     @NotNull(message = "Seller Id is required")
     private Long sellerId;
 

@@ -10,8 +10,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "categories")
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
-public class Categaries {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -19,6 +20,6 @@ public class Categaries {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "parent_id",nullable = false)
-    private Categaries parent;
+    @JoinColumn(name = "parent_id",nullable = true)
+    private Category parent;
 }

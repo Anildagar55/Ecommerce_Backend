@@ -12,7 +12,7 @@ public class Shipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "order_id",nullable = false,unique = true)
     private Order order;
 
