@@ -1,11 +1,16 @@
 package com.example.Eco_Backend.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Builder
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "address")
 public class Address {
     @Id

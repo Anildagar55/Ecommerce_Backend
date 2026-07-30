@@ -3,6 +3,7 @@ package com.example.Eco_Backend.Service;
 import com.example.Eco_Backend.DTO.SellerRequest;
 import com.example.Eco_Backend.DTO.SellerResponse;
 import com.example.Eco_Backend.Entity.Seller;
+import com.example.Eco_Backend.ExceptionHandler.ResourceNotFoundException;
 import com.example.Eco_Backend.Repository.SellerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class SellerService {
     }
     public SellerResponse getSellerById(Long id){
         Seller seller=sellerRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("Seller not found : "+id));
+                .orElseThrow(()->new ResourceNotFoundException("Seller not found : "+id));
         return mapToResponse(seller);
     }
     public List<SellerResponse>getAllSellers(){
@@ -36,7 +37,7 @@ public class SellerService {
     }
     public SellerResponse updateSellerStatus(Long id, String status){
         Seller seller=sellerRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("Seller not found : "+id));
+                .orElseThrow(()->new ResourceNotFoundException("Seller not found : "+id));
         seller.setStatus(status);
         return mapToResponse(sellerRepository.save(seller));
     }

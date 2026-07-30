@@ -8,10 +8,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @Entity
 @Table(name = "payments")
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class Payment {
          @Id
@@ -32,5 +35,6 @@ public class Payment {
        private   double amount;
          @Column(nullable = false)
   private   String gatewayTxnId;
+    private LocalDateTime createdAt;
 
 }

@@ -2,6 +2,7 @@ package com.example.Eco_Backend.Service;
 
 import com.example.Eco_Backend.DTO.InventoryResponse;
 import com.example.Eco_Backend.Entity.Inventory;
+import com.example.Eco_Backend.ExceptionHandler.ResourceNotFoundException;
 import com.example.Eco_Backend.Repository.InventoryRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -15,13 +16,13 @@ public class InventoryService {
     InventoryRepository inventoryRepository;
     public InventoryResponse getByVariant(Long variantId){
        Inventory inventory=inventoryRepository.findByVariantId(variantId)
-               .orElseThrow(()->new RuntimeException("Inventory not found for variant : "+variantId));
+               .orElseThrow(()->new ResourceNotFoundException("Inventory not found for variant : "+variantId));
        return mapToResponse(inventory);
     }
     @Transactional
     public InventoryResponse updateStock(Long variantId,Integer quantity){
         Inventory inventory=inventoryRepository.findByVariantId(variantId)
-                .orElseThrow(()->new RuntimeException("Inventory not found for variant : "+variantId));
+                .orElseThrow(()->new ResourceNotFoundException("Inventory not found for variant : "+variantId));
         inventory.setQuantity(quantity);
         return mapToResponse(inventoryRepository.save(inventory));
     }

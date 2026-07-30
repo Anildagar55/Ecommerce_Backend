@@ -10,6 +10,7 @@ import java.util.List;
 @Builder
 public class OrderResponse {
     private Long id;
+    private String OrderNumber;
     private String status;
     private Double totalAmount;
     private LocalDateTime createdAt;

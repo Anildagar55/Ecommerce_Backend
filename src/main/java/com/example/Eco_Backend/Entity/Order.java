@@ -14,11 +14,15 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
+    @Column(unique = true, nullable = false, updatable = false)
+    private String orderNumber;
 
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
@@ -35,7 +39,7 @@ public class Order {
     @Column(nullable = false)
     private Double totalAmount;
 
-    @Column(nullable = false)
+
     private LocalDateTime createdAt=LocalDateTime.now();
 
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,orphanRemoval = true)

@@ -4,6 +4,7 @@ import com.example.Eco_Backend.DTO.ShipmentRequest;
 import com.example.Eco_Backend.DTO.ShipmentResponse;
 import com.example.Eco_Backend.Entity.Order;
 import com.example.Eco_Backend.Entity.Shipment;
+import com.example.Eco_Backend.ExceptionHandler.ResourceNotFoundException;
 import com.example.Eco_Backend.Repository.OrderRepository;
 import com.example.Eco_Backend.Repository.ShipmentRepository;
 import jakarta.transaction.Transactional;
@@ -19,7 +20,7 @@ public class ShipmentService {
     @Transactional
     public ShipmentResponse createShipment(ShipmentRequest request){
         Order order=orderRepository.findById(request.getOrderId())
-                .orElseThrow(()->new RuntimeException("Order not found : "+request.getOrderId()));
+                .orElseThrow(()->new ResourceNotFoundException("Order not found : "+request.getOrderId()));
         Shipment shipment=Shipment.builder()
                 .order(order)
                 .courierPartner(request.getCourierPartner())
@@ -39,13 +40,13 @@ public class ShipmentService {
     }
     public ShipmentResponse updateStatus(Long id,String status){
         Shipment shipment=shipmentRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("Shipment not found : "+id));
+                .orElseThrow(()->new ResourceNotFoundException("Shipment not found : "+id));
         shipment.setStatus(status);
         return mapToResponse(shipmentRepository.save(shipment));
     }
     public ShipmentResponse getByTrackingId(String trackingId){
         Shipment shipment=shipmentRepository.findByTrackingId(trackingId)
-                .orElseThrow(()->new RuntimeException("Shipment not found for tracnking id : "+trackingId));
+                .orElseThrow(()->new ResourceNotFoundException("Shipment not found for tracnking id : "+trackingId));
         return mapToResponse(shipment);
     }
 }

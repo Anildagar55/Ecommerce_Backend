@@ -5,6 +5,7 @@ import com.example.Eco_Backend.DTO.ProductResponse;
 import com.example.Eco_Backend.Entity.Category;
 import com.example.Eco_Backend.Entity.Product;
 import com.example.Eco_Backend.Entity.Seller;
+import com.example.Eco_Backend.ExceptionHandler.ResourceNotFoundException;
 import com.example.Eco_Backend.Repository.CategoryRepository;
 import com.example.Eco_Backend.Repository.ProductRepository;
 import com.example.Eco_Backend.Repository.SellerRepository;
@@ -27,10 +28,10 @@ public class ProductService {
          @Transactional
     public ProductResponse createProduct(ProductRequest request){
              Seller seller=sellerRepository.findById(request.getSellerId())
-                     .orElseThrow(()->new RuntimeException("Seller not found : "+request.getSellerId()));
+                     .orElseThrow(()->new ResourceNotFoundException("Seller not found : "+request.getSellerId()));
              Category category = categoryRepository.findById(request.getCategory_id())
                      .orElseThrow(() ->
-                             new RuntimeException("Category not found: " + request.getCategory_id()));
+                             new ResourceNotFoundException("Category not found: " + request.getCategory_id()));
              Product product=Product.builder()
                      .title(request.getTitle())
                      .description(request.getDescription())
@@ -45,7 +46,7 @@ public class ProductService {
     @Cacheable(value = "products",key="#id")
     public ProductResponse getProductById(Long id){
              Product product=productRepository.findById(id)
-                     .orElseThrow(()->new RuntimeException("Product id not found : "+id));
+                     .orElseThrow(()->new ResourceNotFoundException("Product id not found : "+id));
              return mapToResponse(product);
          }
          public ProductResponse mapToResponse(Product product){
@@ -77,7 +78,7 @@ public class ProductService {
          @CacheEvict(value = "products", allEntries = true)
          public ProductResponse updateProduct(Long id,ProductRequest request){
              Product product=productRepository.findById(id)
-                     .orElseThrow(()->new RuntimeException("Product not found with id: "+id));
+                     .orElseThrow(()->new ResourceNotFoundException("Product not found with id: "+id));
            product.setTitle(request.getTitle());
            product.setDescription(request.getDescription());
            product.setBasePrice(request.getBasePrice());
@@ -86,7 +87,7 @@ public class ProductService {
          @Transactional
     public void deleteProduct(Long id){
              if (productRepository.existsById(id)){
-                 throw new RuntimeException("Product not found with id : "+id);
+                 throw new ResourceNotFoundException("Product not found with id : "+id);
              }
              productRepository.deleteById(id);
          }

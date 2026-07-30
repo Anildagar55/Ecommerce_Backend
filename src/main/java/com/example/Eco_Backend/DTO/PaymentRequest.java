@@ -8,7 +8,6 @@ import lombok.Data;
 public class PaymentRequest {
     @NotNull(message = "Order Id id required")
     private Long orderId;
-    @NotNull(message ="Payment method is required")
+@NotNull(message ="Payment method is required")
     private PaymentMethod method;
-    private String gatewayTxnId;
 }

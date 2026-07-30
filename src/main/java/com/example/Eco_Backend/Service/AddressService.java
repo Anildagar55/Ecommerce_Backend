@@ -4,6 +4,7 @@ import com.example.Eco_Backend.DTO.AddressRequest;
 import com.example.Eco_Backend.DTO.AddressResponse;
 import com.example.Eco_Backend.Entity.Address;
 import com.example.Eco_Backend.Entity.User;
+import com.example.Eco_Backend.ExceptionHandler.ResourceNotFoundException;
 import com.example.Eco_Backend.Repository.AddressRepository;
 import com.example.Eco_Backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,10 @@ import java.util.stream.Collectors;
 public class AddressService {
     @Autowired
     private AddressRepository addressRepository;
+    @Autowired
     private UserRepository userRepository;
 
-    public AddressResponse registerSeller(AddressRequest request){
+    public AddressResponse registerAddress(AddressRequest request){
         User user =userRepository.findById(request.getUserId())
                 .orElseThrow(()->new RuntimeException("User not found : "+request.getUserId()));
         Address address=Address.builder()
@@ -37,7 +39,7 @@ public class AddressService {
     }
     public void deleteAddress(Long id){
         if (!addressRepository.existsById(id)){
-            throw new RuntimeException("address not found : "+id);
+            throw new ResourceNotFoundException("address not found : "+id);
         }
         addressRepository.deleteById(id);
     }

@@ -3,6 +3,7 @@ package com.example.Eco_Backend.Service;
 import com.example.Eco_Backend.DTO.UserResponse;
 import com.example.Eco_Backend.DTO.UserSignupRequest;
 import com.example.Eco_Backend.Entity.User;
+import com.example.Eco_Backend.ExceptionHandler.ResourceNotFoundException;
 import com.example.Eco_Backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,7 +24,7 @@ public class UserService {
     }
     public UserResponse signup(UserSignupRequest request){
         if (userRepository.existsByEmail(request.getEmail())){
-            throw new IllegalStateException("Email already register : "+request.getEmail());
+            throw new ResourceNotFoundException("Email already register : "+request.getEmail());
         }
         User user=User.builder()
                 .name(request.getName())
@@ -36,7 +37,7 @@ public class UserService {
     }
     public UserResponse getUserById(Long id){
         User user=userRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("User not found : "+id));
+                .orElseThrow(()->new ResourceNotFoundException("User not found : "+id));
           return mapToResponse(user);
     }
     private UserResponse mapToResponse(User user){

@@ -2,12 +2,16 @@ package com.example.Eco_Backend.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.sql.ConnectionBuilder;
 
 @Entity
 @Table(name = "reviews")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Review {
@@ -27,5 +31,6 @@ public class Review {
     private Integer rating;
     @Column(columnDefinition = "TEXT")
     private String comment;
+
 
 }

@@ -5,6 +5,7 @@ import com.example.Eco_Backend.DTO.ProductVariantResponse;
 import com.example.Eco_Backend.Entity.Inventory;
 import com.example.Eco_Backend.Entity.Product;
 import com.example.Eco_Backend.Entity.ProductVariant;
+import com.example.Eco_Backend.ExceptionHandler.ResourceNotFoundException;
 import com.example.Eco_Backend.Repository.InventoryRepository;
 import com.example.Eco_Backend.Repository.ProductRepository;
 import com.example.Eco_Backend.Repository.ProductVariantRepository;
@@ -25,7 +26,7 @@ public class ProductVariantService {
     @Transactional
     public ProductVariantResponse createVariant(ProductVariantRequest request){
         Product product=productRepository.findById(request.getProductId())
-                .orElseThrow(()->new RuntimeException("Product not found : "+request.getProductId()));
+                .orElseThrow(()->new ResourceNotFoundException("Product not found : "+request.getProductId()));
         ProductVariant variant=ProductVariant.builder()
                 .product(product)
                 .size(request.getSize())
